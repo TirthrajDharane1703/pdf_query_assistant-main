@@ -1,56 +1,45 @@
 # PDF Query Assistant
-Welcome to PDF Query Assistant, a handy tool that empowers users to ask questions about PDF documents and receive accurate answers. This README.md file provides an overview of the project, its features, and instructions for usage.
 
-## Features
-Upload PDF: Users can easily upload their PDF files through the user-friendly interface.
+Ask questions about a PDF in plain English and get answers grounded in the document itself. Upload a PDF, and the app retrieves the relevant passages and generates an answer rather than making you search or skim manually.
 
-Ask Questions: Once the PDF is uploaded, users can ask questions related to the content of the document.
+## How it works
 
-Intelligent Query Assistant: The system uses advanced natural language processing to understand and analyze the questions, providing relevant and precise answers.
+1. The PDF is parsed and split into chunks.
+2. Each chunk is embedded and indexed in Pinecone for semantic search.
+3. When you ask a question, LangChain retrieves the most relevant chunks.
+4. The OpenAI API generates an answer grounded in those chunks.
+5. Streamlit provides the web interface.
 
-User-Friendly Interface: The interface is designed for simplicity, ensuring a seamless and intuitive experience for users.
+## Tech stack
 
-## Tech Stack: 
-Python
+Python · Streamlit · LangChain · OpenAI API · Pinecone · HTML/CSS
 
-Streamlit
+## Setup
 
-Langchain
+```bash
+git clone https://github.com/TirthrajDharane1703/pdf_query_assistant-main.git
+cd pdf_query_assistant-main
+pip install -r requirements.txt
+```
 
-Pinecone
+Create a `.env` file in the project root (this file is git-ignored and never committed):
 
-Firebase
+```
+OPENAI_API_KEY=your_openai_key_here
+```
 
-HTML
+Create a Pinecone index with 1536 dimensions (matching OpenAI's embedding size), and add your Pinecone API key and index name where the app expects them.
 
-CSS
+Run the app:
 
-## API used:
-OpenAI 
+```bash
+streamlit run main.py
+```
 
-Pinecone
+## Notes
 
-## Getting Started
-
-1. Clone the project repository:
-     https://github.com/TirthrajDharane1703/pdf_query_assistant-main.git
-2. Create python environment
-3. Install  dependencies using the provided requirements.txt file:
-     pip install -r requirements.txt
-4. Obtain OpenAI API key and add in .env file
-5. Create Index in Pinecone with deimnsions 1536
-6. Add Pinecone API key, enviorment key and index name in main.py file
-7. Create project in Firebase and add the Database url and .json file path in main.py file
-8. Run the application in you environment using:
-       streamlit run main.py
-
-## Contributing
-We welcome contributions from the community! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.
+This was built as a learning project to understand retrieval-augmented generation (RAG) pipelines end to end: chunking, embedding, vector search, and grounded generation.
 
 ## License
-This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Acknowledgments
-Special thanks to the contributors and the open-source community for their valuable input and support.
-
-Happy querying! 🚀
+MIT
